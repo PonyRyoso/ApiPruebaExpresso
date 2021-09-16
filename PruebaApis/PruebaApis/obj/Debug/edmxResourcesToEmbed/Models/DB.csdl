@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DB_InventarioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="marca">
+    <Key>
+      <PropertyRef Name="id_marca" />
+    </Key>
+    <Property Name="id_marca" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="producto" Relationship="Self.FK__producto__id_mar__33D4B598" FromRole="marca" ToRole="producto" />
+  </EntityType>
+  <EntityType Name="presentacion">
+    <Key>
+      <PropertyRef Name="id_presentacion" />
+    </Key>
+    <Property Name="id_presentacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="producto" Relationship="Self.FK__producto__id_pre__34C8D9D1" FromRole="presentacion" ToRole="producto" />
+  </EntityType>
+  <EntityType Name="producto">
+    <Key>
+      <PropertyRef Name="id_producto" />
+    </Key>
+    <Property Name="id_producto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_marca" Type="Int32" />
+    <Property Name="id_presentacion" Type="Int32" />
+    <Property Name="id_proveedor" Type="Int32" />
+    <Property Name="id_zona" Type="Int32" />
+    <Property Name="codigo" Type="Int32" />
+    <Property Name="descripcion_producto" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="precio" Type="Double" Nullable="false" />
+    <Property Name="stock" Type="Int32" Nullable="false" />
+    <Property Name="iva" Type="Int32" />
+    <Property Name="peso" Type="Double" />
+    <NavigationProperty Name="marca" Relationship="Self.FK__producto__id_mar__33D4B598" FromRole="producto" ToRole="marca" />
+    <NavigationProperty Name="presentacion" Relationship="Self.FK__producto__id_pre__34C8D9D1" FromRole="producto" ToRole="presentacion" />
+    <NavigationProperty Name="proveedor" Relationship="Self.FK__producto__id_pro__35BCFE0A" FromRole="producto" ToRole="proveedor" />
+    <NavigationProperty Name="zona" Relationship="Self.FK__producto__id_zon__36B12243" FromRole="producto" ToRole="zona" />
+  </EntityType>
+  <EntityType Name="proveedor">
+    <Key>
+      <PropertyRef Name="id_proveedor" />
+    </Key>
+    <Property Name="id_proveedor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="producto" Relationship="Self.FK__producto__id_pro__35BCFE0A" FromRole="proveedor" ToRole="producto" />
+  </EntityType>
+  <EntityType Name="zona">
+    <Key>
+      <PropertyRef Name="id_zona" />
+    </Key>
+    <Property Name="id_zona" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="producto" Relationship="Self.FK__producto__id_zon__36B12243" FromRole="zona" ToRole="producto" />
+  </EntityType>
+  <Association Name="FK__producto__id_mar__33D4B598">
+    <End Role="marca" Type="Self.marca" Multiplicity="0..1" />
+    <End Role="producto" Type="Self.producto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="marca">
+        <PropertyRef Name="id_marca" />
+      </Principal>
+      <Dependent Role="producto">
+        <PropertyRef Name="id_marca" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__producto__id_pre__34C8D9D1">
+    <End Role="presentacion" Type="Self.presentacion" Multiplicity="0..1" />
+    <End Role="producto" Type="Self.producto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="presentacion">
+        <PropertyRef Name="id_presentacion" />
+      </Principal>
+      <Dependent Role="producto">
+        <PropertyRef Name="id_presentacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__producto__id_pro__35BCFE0A">
+    <End Role="proveedor" Type="Self.proveedor" Multiplicity="0..1" />
+    <End Role="producto" Type="Self.producto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="proveedor">
+        <PropertyRef Name="id_proveedor" />
+      </Principal>
+      <Dependent Role="producto">
+        <PropertyRef Name="id_proveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__producto__id_zon__36B12243">
+    <End Role="zona" Type="Self.zona" Multiplicity="0..1" />
+    <End Role="producto" Type="Self.producto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="zona">
+        <PropertyRef Name="id_zona" />
+      </Principal>
+      <Dependent Role="producto">
+        <PropertyRef Name="id_zona" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DB_InventarioEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="marca" EntityType="Self.marca" />
+    <EntitySet Name="presentacion" EntityType="Self.presentacion" />
+    <EntitySet Name="producto" EntityType="Self.producto" />
+    <EntitySet Name="proveedor" EntityType="Self.proveedor" />
+    <EntitySet Name="zona" EntityType="Self.zona" />
+    <AssociationSet Name="FK__producto__id_mar__33D4B598" Association="Self.FK__producto__id_mar__33D4B598">
+      <End Role="marca" EntitySet="marca" />
+      <End Role="producto" EntitySet="producto" />
+    </AssociationSet>
+    <AssociationSet Name="FK__producto__id_pre__34C8D9D1" Association="Self.FK__producto__id_pre__34C8D9D1">
+      <End Role="presentacion" EntitySet="presentacion" />
+      <End Role="producto" EntitySet="producto" />
+    </AssociationSet>
+    <AssociationSet Name="FK__producto__id_pro__35BCFE0A" Association="Self.FK__producto__id_pro__35BCFE0A">
+      <End Role="proveedor" EntitySet="proveedor" />
+      <End Role="producto" EntitySet="producto" />
+    </AssociationSet>
+    <AssociationSet Name="FK__producto__id_zon__36B12243" Association="Self.FK__producto__id_zon__36B12243">
+      <End Role="zona" EntitySet="zona" />
+      <End Role="producto" EntitySet="producto" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
